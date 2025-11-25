@@ -49,5 +49,22 @@ fi
 
 # -------- EXECUTION --------
 
-#syscalls and its inv
-$CXD/genSyscalls x86_64
+#arch given as 1st param
+if [[ -z $1 ]]; then
+	echo "build: Missing <arch> as 1st argument." >&2
+	exit 1
+fi
+
+#args
+arch=$1
+case $arch in
+
+	#valid arch
+	'arm'|'arm64'|'x86'|'x86-64');;
+
+	#invalid arch
+	*) echo "build: Invalid <arch> given '$arch'." >&2; exit 1;;
+esac
+
+#build
+$CXD/genSyscalls $arch
